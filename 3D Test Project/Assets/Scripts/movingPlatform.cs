@@ -7,7 +7,6 @@ public class movingPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<CharacterController>().enabled = false;
         Debug.Log("Player Entered");
         other.transform.parent = transform;
     }
@@ -16,6 +15,6 @@ public class movingPlatform : MonoBehaviour
     {
         Debug.Log("Player Left");
         other.transform.parent = null;
-        other.transform.localScale = new Vector3(1, 1, 1);
+        //other.transform.localScale = new Vector3(1, 1, 1);
     }
 }
