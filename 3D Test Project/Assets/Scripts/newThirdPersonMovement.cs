@@ -23,10 +23,13 @@ public class newThirdPersonMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    Quaternion tempRotation;
+    float tempGrav;
+
     //Sprinting
     public float speed = 10;
     float trueSpeed;
-    bool sprinting = false;
+    [SerializeField] bool sprinting = false;
     float sprintTimer = 0f;
     public float sprintWaitTimer = 3f;
     bool canSprint = true;
@@ -35,6 +38,7 @@ public class newThirdPersonMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         trueSpeed = speed;
+        tempGrav = gravity;
     }
 
     private void Update()
@@ -43,7 +47,7 @@ public class newThirdPersonMovement : MonoBehaviour
 
         if (!isGrounded)
         {
-            gravity = -9.81f;
+            gravity = tempGrav;
         }
         else
         {
@@ -57,10 +61,26 @@ public class newThirdPersonMovement : MonoBehaviour
             moving = false;
 
 
+        //Implementing a sprint function
+        if (Input.GetButtonDown("Sprint"))
+        {
+            if (sprinting)
+            {
+                sprinting = false;
+            }
+            else
+            {
+                sprinting = true;
+            }
+        }
 
+        if (sprinting)
+        {
+            trueSpeed = speed * 1.5f;
+        }
 
         //implementing gravity
-        gravity = rb.velocity.y;
+        //gravity = rb.velocity.y;
         //rb.AddForce(0f, Physics.gravity.y, 0f);
         rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
 
@@ -70,20 +90,25 @@ public class newThirdPersonMovement : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         //Moving character
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        
 
         if (moving)
         {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            tempRotation = transform.rotation;
+
             inputVector = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
             rb.velocity = inputVector.normalized * trueSpeed;
             rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
         }
         else
         {
             rb.velocity = new Vector3(0f,rb.velocity.y, 0f);
-            
+            transform.rotation = tempRotation;
+            sprinting = false;
         }
     }
 }

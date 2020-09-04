@@ -2240,7 +2240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportSpot: {fileID: 1222811306}
-  player: {fileID: 0}
+  player: {fileID: 1425964707}
 --- !u!1 &1016324111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,7 +3273,7 @@ GameObject:
   - component: {fileID: 1425964713}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3388,14 +3388,15 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   inputVector: {x: 0, y: 0, z: 0}
   moving: 0
-  gravity: 0
+  gravity: -18
   isGrounded: 0
   groundCheck: {fileID: 1304737812}
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  speed: 10
+  speed: 8
+  sprinting: 0
   sprintWaitTimer: 3
 --- !u!1 &1507547159
 GameObject:

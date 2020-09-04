@@ -9,6 +9,7 @@ public class movingPlatform : MonoBehaviour
     {
         Debug.Log("Player Entered");
         other.transform.parent = transform;
+        other.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     private void OnTriggerExit(Collider other)

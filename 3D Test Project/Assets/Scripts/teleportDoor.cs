@@ -22,11 +22,11 @@ public class teleportDoor : MonoBehaviour
         if (other.tag == "Player")
         {
             teleportSpot.SetActive(true);
-            other.GetComponent<CharacterController>().enabled = false;
+            //other.GetComponent<CharacterController>().enabled = false;
             Debug.Log("test");
             player.transform.position = teleportSpot.transform.position;
             Invoke("hideTeleport", 1);
-            other.GetComponent<CharacterController>().enabled = true;
+            //other.GetComponent<CharacterController>().enabled = true;
 
         }
     }
