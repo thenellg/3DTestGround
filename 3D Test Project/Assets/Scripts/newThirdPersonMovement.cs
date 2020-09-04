@@ -43,7 +43,7 @@ public class newThirdPersonMovement : MonoBehaviour
 
         if (!isGrounded)
         {
-            gravity = -2f;
+            gravity = -9.81f;
         }
         else
         {
@@ -60,8 +60,9 @@ public class newThirdPersonMovement : MonoBehaviour
 
 
         //implementing gravity
-        //gravity = rb.velocity.y;
+        gravity = rb.velocity.y;
         //rb.AddForce(0f, Physics.gravity.y, 0f);
+        rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
 
         //Determining character movement
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -69,18 +70,20 @@ public class newThirdPersonMovement : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         //Moving character
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
         if (moving)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
             inputVector = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             rb.velocity = inputVector.normalized * trueSpeed;
+            rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
         }
         else
         {
             rb.velocity = new Vector3(0f,rb.velocity.y, 0f);
+            
         }
     }
 }
