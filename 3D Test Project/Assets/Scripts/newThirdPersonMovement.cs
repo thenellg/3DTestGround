@@ -16,6 +16,7 @@ public class newThirdPersonMovement : MonoBehaviour
     //jumping
     [SerializeField] bool moving;
     public float gravity = -9.81f;
+    public float gravityScale = 2f;
     public float jumpHeight = 3;
     float jumpForce;
     [SerializeField] float jump2Timer = 2;
@@ -64,8 +65,6 @@ public class newThirdPersonMovement : MonoBehaviour
         {
             gravity = 0f;
         }
-
-        //rb.AddForce(0, gravity, 0, ForceMode.VelocityChange);
 
 
         //Implementing a sprint function
@@ -141,28 +140,21 @@ public class newThirdPersonMovement : MonoBehaviour
             Debug.Log(jumpForce);
             rb.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
         }
-        /*
-        if (Input.GetButtonUp("Jump") && !isGrounded)
-        {
-            if (velocity.y > Mathf.Sqrt(-2 * gravity))
-            {
-                velocity.y = Mathf.Sqrt(-gravity);
-            }
-        }
-        */
 
         //implementing gravity
         //vertical = rb.velocity.y;                              //Uncomment this line for ramping
         rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
 
-        //Determining character movement
+        //actual gravitational force
+        Vector3 gravForce = Physics.gravity.y * gravityScale * Vector3.up;
+        rb.AddForce(gravForce, ForceMode.Acceleration);
+
+        //Determining character movement input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         //Moving character
-
-
         if (moving)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
