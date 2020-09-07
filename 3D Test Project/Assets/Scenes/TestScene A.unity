@@ -553,7 +553,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286093911}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 28.27, y: 14.63, z: 2.832272}
+  m_LocalPosition: {x: 29.1, y: 13.6, z: 2.832272}
   m_LocalScale: {x: 4.0998936, y: 1.3430432, z: 9.762257}
   m_Children: []
   m_Father: {fileID: 332763690}
@@ -2928,7 +2928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1288382479
 Transform:
   m_ObjectHideFlags: 0
@@ -3271,6 +3271,7 @@ GameObject:
   - component: {fileID: 1425964709}
   - component: {fileID: 1425964712}
   - component: {fileID: 1425964713}
+  - component: {fileID: 1425964714}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -3387,10 +3388,13 @@ MonoBehaviour:
   cam: {fileID: 963194228}
   turnSmoothTime: 0.1
   inputVector: {x: 0, y: 0, z: 0}
+  playerAnim: {fileID: 1425964714}
   moving: 0
-  gravity: -18
-  jumpHeight: 3
+  gravity: -1
+  jumpHeight: 10
+  jump2Timer: 2
   jump2: 0
+  jump3Timer: 2
   jump3: 0
   secondJumpPoint: 0.4
   vertical: -10
@@ -3400,9 +3404,28 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  speed: 10
+  speed: 9
   sprinting: 0
   sprintWaitTimer: 3
+--- !u!95 &1425964714
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425964707}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bb4e78c313a29f341b0eb9d1fb090626, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1507547159
 GameObject:
   m_ObjectHideFlags: 0
