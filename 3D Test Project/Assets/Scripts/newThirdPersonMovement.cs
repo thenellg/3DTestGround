@@ -11,7 +11,7 @@ public class newThirdPersonMovement : MonoBehaviour
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     [SerializeField] private Vector3 inputVector;
-    public Animator playerAnim;
+    //public Animator playerAnim;
 
     //jumping
     [SerializeField] bool moving;
@@ -114,7 +114,6 @@ public class newThirdPersonMovement : MonoBehaviour
         jumpForce = gravity;
         if (Input.GetButtonDown("Jump") && isGrounded && jumpCheck)
         {
-            playerAnim.SetTrigger("playerJumps");
             if (jump2 && moving)
             {
                 jump3 = true;
