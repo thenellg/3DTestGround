@@ -2,9 +2,9 @@
 My 3D Platformer I am using to test various skills in 3D.
 
 # Current Working On
-Moving Platforms and Wall Running.
+Wall Running.
 
-The big issue right now is that the character controller I am using for our player doesn't account for physics objects in the way I need it to. To counteract this, I am going to rebuild the character movement script using rigidbody movement instead. This should also stop the strange character stretching glitch.
+The character controller probably needs some tweaking but for right now, I'm happy with where it is.
 
 # Features
 - [X] Triple Jump
