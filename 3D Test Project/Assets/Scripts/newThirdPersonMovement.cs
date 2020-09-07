@@ -14,9 +14,18 @@ public class newThirdPersonMovement : MonoBehaviour
 
     //jumping
     [SerializeField] bool moving;
+    public float gravity = -9.81f;
+    public float jumpHeight = 3;
+    float jumpForce;
+    float jump2Timer = 2;
+    [SerializeField] bool jump2 = false;
+    float jump3Timer = 2;
+    [SerializeField] bool jump3 = false;
+    bool jumpCheck = true;
+    public float secondJumpPoint = 0.4f;
 
     //gravity
-    public float gravity;
+    public float vertical = -10f;
     public bool isGrounded;
 
     public Transform groundCheck;
@@ -30,9 +39,9 @@ public class newThirdPersonMovement : MonoBehaviour
     public float speed = 10;
     float trueSpeed;
     [SerializeField] bool sprinting = false;
-    float sprintTimer = 0f;
+    //float sprintTimer = 0f;
     public float sprintWaitTimer = 3f;
-    bool canSprint = true;
+    //bool canSprint = true;
 
     private void Start()
     {
@@ -43,6 +52,7 @@ public class newThirdPersonMovement : MonoBehaviour
 
     private void Update()
     {
+        //Seting up is grounded and keeping the player grounded
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (!isGrounded)
@@ -60,6 +70,63 @@ public class newThirdPersonMovement : MonoBehaviour
         else
             moving = false;
 
+        //Triple jump timers
+        if (isGrounded)
+        {
+            jump2Timer -= 0.01f;
+            jump3Timer -= 0.01f;
+        }
+
+        if (jump2Timer < 0)
+        {
+            jump2 = false;
+        }
+
+        if (jump3Timer < 0)
+        {
+            jump3 = false;
+        }
+
+        //The actual jump
+        jumpForce = gravity;
+        if (Input.GetButtonDown("Jump") && isGrounded && jumpCheck)
+        {
+            if (jump2 && moving)
+            {
+                jump3 = true;
+                jump3Timer = secondJumpPoint;
+                jumpForce = Mathf.Sqrt((jumpHeight * 1.25f) * -2 * tempGrav);
+                //playerAnim.SetTrigger("DoubleJump");
+                jump2 = false;
+            }
+            else if (jump3 && moving)
+            {
+                jumpForce = Mathf.Sqrt((jumpHeight * 2) * -2 * tempGrav);
+                //playerAnim.SetTrigger("TripleJump");
+                jump3 = false;
+            }
+            else
+            {
+                jumpForce = Mathf.Sqrt(jumpHeight * -2 * tempGrav);
+                //playerAnim.SetTrigger("SingleJump");
+                jump2Timer = secondJumpPoint;
+                jump2 = true;
+            }
+
+            //Apply add force
+
+            Debug.Log(jumpForce);
+            rb.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
+        }
+        /*
+        if (Input.GetButtonUp("Jump") && !isGrounded)
+        {
+            if (velocity.y > Mathf.Sqrt(-2 * gravity))
+            {
+                velocity.y = Mathf.Sqrt(-gravity);
+            }
+        }
+        */
 
         //Implementing a sprint function
         if (Input.GetButtonDown("Sprint"))
@@ -80,7 +147,7 @@ public class newThirdPersonMovement : MonoBehaviour
         }
 
         //implementing gravity
-        //gravity = rb.velocity.y;
+        //vertical = rb.velocity.y;                              //Uncomment this line for ramping
         //rb.AddForce(0f, Physics.gravity.y, 0f);
         rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
 
@@ -101,14 +168,17 @@ public class newThirdPersonMovement : MonoBehaviour
 
             inputVector = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            rb.velocity = inputVector.normalized * trueSpeed;
-            rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
+            inputVector = inputVector.normalized * trueSpeed;
+            //rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(inputVector.x, inputVector.y, inputVector.z);
         }
+        /*
         else
         {
             rb.velocity = new Vector3(0f,rb.velocity.y, 0f);
             transform.rotation = tempRotation;
             sprinting = false;
         }
+        */
     }
 }
