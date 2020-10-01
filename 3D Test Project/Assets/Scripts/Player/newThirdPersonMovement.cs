@@ -7,13 +7,14 @@ using UnityEngine;
 
 public class newThirdPersonMovement : MonoBehaviour
 {
+
     [Header("General")]
     [SerializeField] private Rigidbody rb;
     public Transform cam;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     [SerializeField] private Vector3 inputVector;
-    //public Animator playerAnim;
+    public Animator playerAnim;
 
     //jumping
     [Header("Jumping")] 
@@ -49,7 +50,7 @@ public class newThirdPersonMovement : MonoBehaviour
     Vector3 dashForce;
     public float dashSpeed = 100f;
     public float dashTimer = 1f;
-    public CinemachineFreeLook vcam;
+    bool canDash = true;
 
     private void Start()
     {
@@ -66,10 +67,12 @@ public class newThirdPersonMovement : MonoBehaviour
         if (!isGrounded)
         {
             gravity = tempGrav;
+            playerAnim.SetBool("isGrounded", false);
         }
         else
         {
             gravity = 0f;
+            playerAnim.SetBool("isGrounded", true);
         }
 
 
@@ -106,19 +109,19 @@ public class newThirdPersonMovement : MonoBehaviour
                 jump3 = true;
                 jump3Timer = 2f;
                 jumpForce = jumpHeight * 1.2f;
-                //playerAnim.SetTrigger("DoubleJump");
+                playerAnim.SetTrigger("doubleJump");
                 jump2 = false;
             }
             else if (jump3 && moving)
             {
                 jumpForce = jumpHeight * 1.45f;
-                //playerAnim.SetTrigger("TripleJump");
+                playerAnim.SetTrigger("tripleJump");
                 jump3 = false;
             }
             else
             {
                 jumpForce = jumpHeight;
-                //playerAnim.SetTrigger("SingleJump");
+                playerAnim.SetTrigger("singleJump");
                 jump2Timer = 2f;
                 jump2 = true;
             }
@@ -165,7 +168,7 @@ public class newThirdPersonMovement : MonoBehaviour
 
             float fullDash = dashSpeed * speed;
 
-        if (Input.GetButtonDown("Dash") && !dashing)
+        if (Input.GetButtonDown("Dash") && canDash)
         {
             //Same code as determining movement direction. Copy pasta-ed because there were 
             //some issues with the stand still otherwise. 
@@ -177,12 +180,11 @@ public class newThirdPersonMovement : MonoBehaviour
             inputVector = inputVector.normalized * trueSpeed;
             dashForce = new Vector3(inputVector.x * fullDash, inputVector.y * fullDash, inputVector.z * fullDash);
 
-            vcam.LookAt = null;
-                
-
-            vcam.LookAt = this.transform;
+            playerAnim.SetBool("dashing", true);
+            playerAnim.SetTrigger("dashTrigger");
             
             dashing = true;
+            canDash = false;
             Invoke("resetDash", dashTimer);
         }
         if (dashing) {
@@ -193,6 +195,16 @@ public class newThirdPersonMovement : MonoBehaviour
     void resetDash()
     {
         dashing = false;
+        playerAnim.SetBool("dashing", false);
+
+        if (isGrounded)
+        {
+            canDash = true;
+        }
+        else
+        {
+            Invoke("resetDash", 0.1f);
+        }
     }
 
 }

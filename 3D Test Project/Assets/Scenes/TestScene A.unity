@@ -778,7 +778,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309604561}
-  m_LocalRotation: {x: -0.0000000033336496, y: 0.99313027, z: -0.11701424, w: -0.000000028293552}
+  m_LocalRotation: {x: -0.0000000034598464, y: 0.99313027, z: -0.11701424, w: -0.000000029364598}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1889,7 +1889,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.0000000023508167, y: 0.99313027, z: -0.11701425, w: 0.000000019951987}
+  m_LocalRotation: {x: 0.0000000023529891, y: 0.99313027, z: -0.11701425, w: 0.000000019970425}
   m_LocalPosition: {x: -27.390001, y: 6.5299997, z: 10.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3023,6 +3023,7 @@ GameObject:
   - component: {fileID: 1425964709}
   - component: {fileID: 1425964712}
   - component: {fileID: 1425964713}
+  - component: {fileID: 1425964710}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -3061,6 +3062,25 @@ CapsuleCollider:
   m_Height: 3.1077452
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0.008430481, z: -0.00000011920929}
+--- !u!95 &1425964710
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425964707}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1069d5592456c6d47a5b9da6e02e2750, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!54 &1425964712
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3093,13 +3113,14 @@ MonoBehaviour:
   cam: {fileID: 963194228}
   turnSmoothTime: 0.1
   inputVector: {x: 0, y: 0, z: 0}
+  playerAnim: {fileID: 1425964710}
   moving: 0
   gravity: -1
   gravityScale: 0.4
   jumpHeight: 12
   jump2: 0
   jump3: 0
-  secondJumpPoint: 0.4
+  secondJumpPoint: 0.2
   vertical: -10
   isGrounded: 1
   groundCheck: {fileID: 1304737812}
@@ -3109,9 +3130,8 @@ MonoBehaviour:
     m_Bits: 256
   speed: 8
   dashing: 0
-  dashSpeed: 3
+  dashSpeed: 5
   dashTimer: 0.1
-  vcam: {fileID: 1703965471}
 --- !u!1 &1507547159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,7 +3502,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622262425}
-  m_LocalRotation: {x: -0.000000002184503, y: 0.9908376, z: -0.13505942, w: -0.00000001602618}
+  m_LocalRotation: {x: -0.0000000023361195, y: 0.9908376, z: -0.13505942, w: -0.000000017138476}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4438,7 +4458,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944406431}
-  m_LocalRotation: {x: -0.0000000014422792, y: 0.9950896, z: -0.098978154, w: -0.000000014500149}
+  m_LocalRotation: {x: -0.0000000015533752, y: 0.9950896, z: -0.098978154, w: -0.000000015617024}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
